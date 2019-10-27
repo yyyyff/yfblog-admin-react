@@ -1,0 +1,5 @@
+const defaultState = {
+  data: [],
+  agination: {}
+}
+

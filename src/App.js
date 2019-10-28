@@ -1,20 +1,26 @@
 import React from 'react'
-import { Button } from 'antd'
-import logo from './logo.svg'
-import './App.less'
+import PropTypes from 'prop-types'
+import { ConnectedRouter } from 'connected-react-router'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import AuthRouter from '@/router/protected'
+import Login from '@/views/Login'
+import Home from '@/views/Home'
 
-function App() {
+function App({ history }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Button type="primary">按钮</Button>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ConnectedRouter history={history}>
+      <Router>
+        <Switch>
+          <Route path='/login' exact component={Login} />
+          <AuthRouter path="/" component={Home} />
+        </Switch>
+      </Router>
+    </ConnectedRouter>
   )
+}
+
+App.propTypes = {
+  history: PropTypes.object
 }
 
 export default App

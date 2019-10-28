@@ -1,8 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-
-// redux
-// import {Provider} from 'react-redux'
-// import store from '@/redux'
-ReactDOM.render(<App />, document.getElementById('root'));
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import App from './App'
+import configureStore, { history } from './redux'
+const store = configureStore()
+ReactDOM.render(
+  <Provider store={store}>
+    <App history={history}/>
+  </Provider>,
+  document.getElementById('root')
+)

@@ -17,6 +17,5 @@ const enhancers =
 
 
 export default function configureStore(preloadedState) {
-  const store = createStore(createRootReducer(history), preloadedState, enhancers)
-  return store
+  return createStore(createRootReducer(history), preloadedState, enhancers)
 }

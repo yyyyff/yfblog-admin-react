@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Icon, Input, Button } from 'antd'
+import {useDispatch,useSelector } from 'react-redux'
+import {adminLogin} from '../../redux/actions/auth'
 import './index.less'
 
 function Login({ form }) {
+  const dispatch = useDispatch()
   const { getFieldDecorator } = form
 
   const handleSubmit = e => {
     e.preventDefault()
     form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        dispatch(adminLogin(values))
       }
     })
+    setTimeout(() => {
+      form.resetFields()
+    }, 1500);
   }
+
   return (
     <div className="container">
       <div className="loginBox">

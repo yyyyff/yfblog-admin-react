@@ -1,11 +1,9 @@
-import { SAVE_PREFIX } from '../config'
+import { SAVE_PREFIX } from '@/config'
 
 export const get = key => {
   const value = localStorage.getItem(`${SAVE_PREFIX}${key}`)
-  if(value){
-    return JSON.parse(value)
-  }
-  return null
+  if (!value) return null
+  return value.startsWith('{') || value.startsWith('[') ? JSON.parse(value) : value
 }
 
 export const save = (key,value)=>{

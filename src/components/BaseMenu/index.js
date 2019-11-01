@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Menu, Icon, Button } from "antd"
 import { Link } from "react-router-dom"
 import {useSelector} from 'react-redux'
@@ -6,24 +6,18 @@ const { SubMenu } = Menu
 
 const BaseMenu = ({ Menus, collapsed }) => {
   const router = useSelector(state=>state.router)
-  const getSelectKey = () => {
-    if(router.location.pathname === '/' || router.location.pathname === '/dashboard'){
-      return '/dashboard'
-    }else{
-      return router.location.pathname
-    }
-  }
   const getSubKey = () =>{
+    const pathname = router.location.pathname
     let patt = /\/[A-Za-z]+/
-    if(patt.test(router.location.pathname)){
-      return router.location.pathname.match(patt)[0]
+    if(pathname.includes('page')||pathname.includes('article')){
+      return pathname.match(patt)[0]
     }else{
       return null
     }
   }
-  const renderMenu = menu => (
+  const renderMenu = (menu,topTitle='') => (
     <Menu.Item key={menu.path}>
-      <Link to={{pathname:menu.path,state:menu.title}}>
+      <Link to={{pathname:menu.path,state:[topTitle,menu.title]}}>
         <Icon type={menu.icon} />
         <span>{menu.title}</span>
       </Link>
@@ -41,14 +35,15 @@ const BaseMenu = ({ Menus, collapsed }) => {
       }
     >
       {menu.subMenu.map(item =>
-        item.subMenu ? renderSubMenu(item) : renderMenu(item)
+        item.subMenu ? renderSubMenu(item) : renderMenu(item,menu.title)
       )}
     </SubMenu>
   )
   return (
     <Menu
-      defaultSelectedKeys={[getSelectKey()]}
-      defaultOpenKeys={[getSubKey()]}
+      defaultSelectedKeys={['/dashboard']}
+      selectedKeys={[router.location.pathname]}
+      // defaultOpenKeys={getSubKey()}
       mode="inline"
       theme="light"
       collapsed={collapsed.toString()}

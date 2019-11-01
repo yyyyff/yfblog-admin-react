@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import Loading from "@/components/Loading"
-
+import NotFound from "@/views/404"
 const HomeRouters = ({ Menus }) => {
   // const router = menu => {
   //   return (
@@ -21,12 +21,15 @@ const HomeRouters = ({ Menus }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Route exact path="/">
-        <Redirect to="/dashboard" />
-      </Route>
-      {Menus.map(menu =>
-        menu.subMenu ? menu.subMenu.map(item => router(item)) : router(menu)
-      )}
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/dashboard" />
+        </Route>
+        {Menus.map(menu =>
+          menu.subMenu ? menu.subMenu.map(item => router(item)) : router(menu)
+        )}
+        <Route component={NotFound} />
+      </Switch>
     </Suspense>
   )
 

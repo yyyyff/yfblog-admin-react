@@ -6,6 +6,7 @@ import AuthRouter from "@/router/protected"
 import Login from "@/views/Login"
 import Home from "@/views/Home"
 import Loading from "@/components/Loading"
+import NotFound from "@/views/404"
 
 function App({ history }) {
   return (
